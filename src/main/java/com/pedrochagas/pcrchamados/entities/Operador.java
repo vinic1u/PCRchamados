@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "tb_operador")
 @Data
@@ -28,5 +30,9 @@ public class Operador {
     @ManyToOne
     @JoinColumn(name = "id_setor")
     public Setor setor;
+
+    @OneToMany(mappedBy = "operador")
+    private List<Chamado> chamados;
+
 
 }
