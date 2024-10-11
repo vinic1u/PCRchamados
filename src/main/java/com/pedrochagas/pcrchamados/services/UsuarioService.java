@@ -50,4 +50,26 @@ public class UsuarioService {
         return new UsuarioResponseDTO(usuario);
     }
 
+    @Transactional
+    public UsuarioResponseDTO atualizarUsuario(Long id,UsuarioRequestDTO dto){
+        Usuario entity = usuarioRepository.findById(id)
+                .orElseThrow(()-> new RecursoNaoEncontradoException("Usuario com ID: " + id + " não foi encontrado!"));
+
+        entity.setNome(dto.getNome());
+        entity.setTelefone(dto.getTelefone());
+        entity.setEmail(dto.getEmail());
+
+        Long setorId = dto.getIdSetor();
+        Setor setor = setorRepository.findById(setorId)
+                .orElseThrow(()->new RecursoNaoEncontradoException("Setor com ID: " + setorId + " não encontrado!" ));
+        entity.setSetor(setor);
+        return new UsuarioResponseDTO(entity);
+    }
+
+    @Transactional
+    public void DeletarUsuario(Long id){
+        Usuario entity = usuarioRepository.findById(id)
+                .orElseThrow(()-> new RecursoNaoEncontradoException("Usuario com ID: " + id + " não foi encontrado!"));
+        usuarioRepository.delete(entity);
+    }
 }

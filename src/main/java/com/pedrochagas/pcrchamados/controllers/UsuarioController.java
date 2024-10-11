@@ -38,7 +38,22 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(@PathVariable(name = "id") Long id){
+    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(
+            @PathVariable(name = "id") Long id){
         return ResponseEntity.ok(usuarioService.buscarUsuarioPorId(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(
+            @PathVariable(name = "id") Long id,
+            @RequestBody UsuarioRequestDTO dto){
+        UsuarioResponseDTO response = usuarioService.atualizarUsuario(id,dto);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarUsuario(@PathVariable(name = "id") Long id){
+        usuarioService.DeletarUsuario(id);
+        return ResponseEntity.noContent().build();
     }
 }
