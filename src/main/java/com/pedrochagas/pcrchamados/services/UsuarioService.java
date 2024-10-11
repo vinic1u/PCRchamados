@@ -6,6 +6,7 @@ import com.pedrochagas.pcrchamados.entities.Setor;
 import com.pedrochagas.pcrchamados.entities.Usuario;
 import com.pedrochagas.pcrchamados.repositories.SetorRepository;
 import com.pedrochagas.pcrchamados.repositories.UsuarioRepository;
+import com.pedrochagas.pcrchamados.services.exceptions.RecursoNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,9 @@ public class UsuarioService {
         entity.setEmail(dto.getEmail());
         entity.setTelefone(dto.getTelefone());
 
-        Setor setor = setorRepository.findById(dto.getIdSetor()).orElseThrow(()->new RuntimeException("Recurso não encontrado"));
+        Long setorId = dto.getIdSetor();
+        Setor setor = setorRepository.findById(setorId)
+                .orElseThrow(()->new RecursoNaoEncontradoException("Setor com ID: " + setorId + " não encontrado!" ));
         entity.setSetor(setor);
         usuarioRepository.save(entity);
         return new UsuarioResponseDTO(entity);
