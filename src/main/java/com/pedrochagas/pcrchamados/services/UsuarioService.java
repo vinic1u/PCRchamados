@@ -8,6 +8,8 @@ import com.pedrochagas.pcrchamados.repositories.SetorRepository;
 import com.pedrochagas.pcrchamados.repositories.UsuarioRepository;
 import com.pedrochagas.pcrchamados.services.exceptions.RecursoNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,6 +33,17 @@ public class UsuarioService {
         entity.setSetor(setor);
         usuarioRepository.save(entity);
         return new UsuarioResponseDTO(entity);
+    }
+
+    public Page<UsuarioResponseDTO> listarUsuarios(Pageable pageable){
+        Page<Usuario> usuarios = usuarioRepository.findAll(pageable);
+        return usuarios.map(UsuarioResponseDTO::new);
+    }
+
+    public UsuarioResponseDTO buscarUsuarioPorId(Long id){
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(()-> new RecursoNaoEncontradoException("Usuario com ID: " + id + " não foi encontrado!"));
+        return new UsuarioResponseDTO(usuario);
     }
 
 }
