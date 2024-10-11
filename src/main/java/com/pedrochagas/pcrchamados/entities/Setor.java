@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "tb_setor")
 @Data
@@ -18,4 +20,10 @@ public class Setor {
 
     @Column(columnDefinition = "VARCHAR(100)",nullable = false,unique = true)
     private String nome;
+
+    @OneToMany(mappedBy = "setor")
+    private List<Usuario> usuarios;
+
+    @OneToMany(mappedBy = "setor")
+    private List<Operador> operadores;
 }

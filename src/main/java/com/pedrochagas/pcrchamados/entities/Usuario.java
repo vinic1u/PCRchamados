@@ -25,5 +25,7 @@ public class Usuario {
     @Column(columnDefinition = "VARCHAR(25)",nullable = false,unique = true)
     private String telefone;
 
-
+    @ManyToOne
+    @JoinColumn(name = "id_setor")
+    private Setor setor;
 }
