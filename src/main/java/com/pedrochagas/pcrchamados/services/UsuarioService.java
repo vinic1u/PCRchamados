@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UsuarioService {
@@ -21,6 +22,7 @@ public class UsuarioService {
     @Autowired
     private SetorRepository setorRepository;
 
+    @Transactional
     public UsuarioResponseDTO criarUsuario(UsuarioRequestDTO dto){
         Usuario entity = new Usuario();
         entity.setNome(dto.getNome());
@@ -35,11 +37,13 @@ public class UsuarioService {
         return new UsuarioResponseDTO(entity);
     }
 
+    @Transactional(readOnly = true)
     public Page<UsuarioResponseDTO> listarUsuarios(Pageable pageable){
         Page<Usuario> usuarios = usuarioRepository.findAll(pageable);
         return usuarios.map(UsuarioResponseDTO::new);
     }
 
+    @Transactional(readOnly = true)
     public UsuarioResponseDTO buscarUsuarioPorId(Long id){
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(()-> new RecursoNaoEncontradoException("Usuario com ID: " + id + " não foi encontrado!"));
