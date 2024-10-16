@@ -17,4 +17,5 @@ public class OperadorRequestDTO {
     private String telefone;
 
     public Long setorId;
+
 }
