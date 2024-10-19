@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_chamado")
@@ -22,9 +23,6 @@ public class Chamado {
     @Column(columnDefinition = "VARCHAR(70)",nullable = false)
     private String titulo;
 
-    @Column(columnDefinition = "TEXT")
-    private String observacoes;
-
     private LocalDateTime abertoEm;
 
     @Enumerated(EnumType.STRING)
@@ -37,5 +35,8 @@ public class Chamado {
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "chamado")
+    private List<Observacao> observacoes;
 
 }
