@@ -1,5 +1,6 @@
 package com.pedrochagas.pcrchamados.dtos.chamadoDTO;
 
+import com.pedrochagas.pcrchamados.dtos.observacaoDTO.ObservacaoResponseDTO;
 import com.pedrochagas.pcrchamados.dtos.operadorDTO.OperadorResponseDTO;
 import com.pedrochagas.pcrchamados.dtos.usuarioDTO.UsuarioResponseDTO;
 import com.pedrochagas.pcrchamados.entities.Chamado;
@@ -12,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -20,7 +22,7 @@ public class ChamadoResponseDTO {
 
     private Long id;
     private String titulo;
-    private String observacoes;
+    private List<ObservacaoResponseDTO> observacoes;
     private LocalDateTime abertoEm;
     private ChamadoStatus status;
     private OperadorResponseDTO operador;
@@ -29,10 +31,10 @@ public class ChamadoResponseDTO {
     public ChamadoResponseDTO(Chamado entity){
         this.id = entity.getId();
         this.titulo = entity.getTitulo();
-        this.observacoes = entity.getObservacoes();
         this.abertoEm = entity.getAbertoEm();
         this.status = entity.getStatus();
         this.operador = new OperadorResponseDTO(entity.getOperador());
         this.usuario = new UsuarioResponseDTO(entity.getUsuario());
+        this.observacoes = entity.getObservacoes().stream().map(ObservacaoResponseDTO::new).toList();
     }
 }
