@@ -33,7 +33,6 @@ public class ChamadoResponseDTO {
         this.titulo = entity.getTitulo();
         this.abertoEm = entity.getAbertoEm();
         this.status = entity.getStatus();
-        this.operador = new OperadorResponseDTO(entity.getOperador());
         this.usuario = new UsuarioResponseDTO(entity.getUsuario());
         this.observacoes = entity.getObservacoes().stream().map(ObservacaoResponseDTO::new).toList();
     }
