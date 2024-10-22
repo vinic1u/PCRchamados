@@ -1,5 +1,6 @@
 package com.pedrochagas.pcrchamados.entities;
 
+import com.pedrochagas.pcrchamados.dtos.observacaoDTO.ObservacaoRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,4 +26,9 @@ public class Observacao {
 
     @ManyToOne
     private Chamado chamado;
+
+    public Observacao(String mensagem,LocalDateTime enviadaEm){
+        this.mensagem = mensagem;
+        this.enviadaEm = enviadaEm;
+    }
 }
