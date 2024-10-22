@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ObservacaoRequestDTO {
 
-    private Long mensagem;
+    private String mensagem;
 }
