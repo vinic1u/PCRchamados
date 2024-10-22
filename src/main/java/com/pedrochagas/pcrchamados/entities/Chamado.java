@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -36,7 +37,7 @@ public class Chamado {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "chamado")
-    private List<Observacao> observacoes;
+    @OneToMany(mappedBy = "chamado",cascade = CascadeType.ALL)
+    private List<Observacao> observacoes = new ArrayList<>();
 
 }
