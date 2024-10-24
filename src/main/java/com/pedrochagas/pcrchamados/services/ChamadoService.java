@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 
@@ -79,6 +80,19 @@ public class ChamadoService {
 
         chamadoRepository.save(chamado);
         return new ChamadoResponseDTO(chamado);
+    }
+
+    @Transactional
+    public void atualizarStatus(Long id,ChamadoStatus status){
+        Chamado chamado = chamadoRepository.findById(id)
+                .orElseThrow(()->new RecursoNaoEncontradoException("Chamado com ID: " + id + " não encontrado!"));
+        chamadoRepository.atualizarStatus(id,status.name());
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ChamadoResponseDTO> buscarChamadosPorUsuario(String nome,Pageable pageable){
+        Page<Chamado> chamados = chamadoRepository.buscarChamadosPorUsuario(nome,pageable);
+        return chamados.map(ChamadoResponseDTO::new);
     }
 
 
